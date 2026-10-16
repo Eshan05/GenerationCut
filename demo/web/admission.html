@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Generation Interrupted | Streaming admission</title>
+  <link rel="icon" href="/demo/icons/activity.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demo/style.css">
+  <script type="module" src="/demo/admission.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <div class="brand"><span class="brand-mark"><img src="/demo/icons/activity.svg" width="16" height="16" alt=""></span>Generation Interrupted</div>
+      <nav class="lab-nav" aria-label="Experiments">
+        <a href="/demo/"><img src="/demo/icons/audio-lines.svg" alt="" width="15" height="15">Streams</a>
+        <a href="/demo/recovery/"><img src="/demo/icons/chart-no-axes-combined.svg" alt="" width="15" height="15">Recovery</a>
+        <a href="/demo/admission/" aria-current="page"><img src="/demo/icons/list-filter.svg" alt="" width="15" height="15">Admission</a>
+        <a href="/demo/shared-backend/"><img src="/demo/icons/network.svg" alt="" width="15" height="15">Shared backend</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="setup" aria-labelledby="title">
+      <h1 id="title">Streaming admission</h1>
+      <p id="admission-detail" class="run-detail" role="status">Loading experiment results.</p>
+    </section>
+    <div id="admission-results" hidden>
+      <section class="recovery-section" aria-labelledby="outcomes-title">
+        <h2 id="outcomes-title">On-time outcomes</h2>
+        <div id="admission-chart" class="admission-chart"></div>
+      </section>
+      <section class="recovery-section" aria-labelledby="arrivals-title">
+        <h2 id="arrivals-title">Request outcomes</h2>
+        <div class="results-scroll" tabindex="0" aria-label="Request outcomes table">
+          <table class="results-table admission-table">
+            <thead><tr><th scope="col">Arrival</th><th scope="col">First text target</th><th scope="col">Completion target</th><th scope="col">Bounded queue</th><th scope="col">Deadline-aware</th></tr></thead>
+            <tbody id="admission-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

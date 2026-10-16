@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Generation Interrupted | Reconnect experiment</title>
+  <link rel="icon" href="/demo/icons/activity.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demo/style.css">
+  <script type="module" src="/demo/reconnect.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <div class="brand"><span class="brand-mark"><img src="/demo/icons/activity.svg" width="16" height="16" alt=""></span>Generation Interrupted</div>
+      <nav class="lab-nav" aria-label="Experiments">
+        <a href="/demo/"><img src="/demo/icons/audio-lines.svg" alt="" width="15" height="15">Streams</a>
+        <a href="/demo/recovery/"><img src="/demo/icons/chart-no-axes-combined.svg" alt="" width="15" height="15">Recovery</a>
+        <a href="/demo/admission/"><img src="/demo/icons/list-filter.svg" alt="" width="15" height="15">Admission</a>
+        <a href="/demo/shared-backend/"><img src="/demo/icons/network.svg" alt="" width="15" height="15">Shared backend</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="setup" aria-labelledby="title">
+      <h1 id="title">Reconnect experiment</h1>
+      <div class="toolbar">
+        <fieldset id="faults">
+          <legend>Connection to cut</legend>
+          <div class="choices">
+            <label><input type="radio" name="fault" value="browser" checked><span>Browser</span></label>
+            <label><input type="radio" name="fault" value="upstream"><span>Ollama</span></label>
+          </div>
+        </fieldset>
+        <button id="run" type="button"><img src="/demo/icons/play.svg" width="16" height="16" alt=""><span>Run experiment</span></button>
+      </div>
+    </section>
+    <section class="workspace" aria-labelledby="prompt-label">
+      <div class="prompt-bar">
+        <div class="prompt-copy"><span id="prompt-label" class="eyebrow">Prompt</span><p>How does a cache reduce load on a busy API?</p></div>
+        <div><span class="eyebrow">Local Ollama</span><p id="total-calls" class="run-detail">0 requests attempted</p></div>
+      </div>
+      <div id="attempts" class="reconnect-grid"></div>
+      <div id="recovery-actions" class="reconnect-actions" hidden>
+        <button type="button" data-action="continue">Continue from partial</button>
+        <button type="button" data-action="regenerate">Regenerate</button>
+      </div>
+      <p id="run-error" class="run-detail reconnect-error" role="alert" hidden></p>
+    </section>
+    <template id="attempt-template">
+      <article class="policy">
+        <header class="policy-header"><h2></h2><span class="status" role="status">Ready</span></header>
+        <div class="policy-body"><div class="transcript"></div><p class="note"></p></div>
+        <dl class="metrics">
+          <div><dt>Ollama attempts</dt><dd data-metric="calls">0</dd></div>
+          <div><dt>Browser reconnects</dt><dd data-metric="reconnects">0</dd></div>
+          <div><dt>Replayed text chunks</dt><dd data-metric="replayed">0</dd></div>
+          <div><dt>Time to outcome</dt><dd data-metric="time">-</dd></div>
+        </dl>
+      </article>
+    </template>
+  </main>
+</body>
+</html>

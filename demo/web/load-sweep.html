@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Generation Interrupted | Load and workers</title>
+  <link rel="icon" href="/demo/icons/activity.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demo/style.css">
+  <script type="module" src="/demo/load-sweep.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <div class="brand"><span class="brand-mark"><img src="/demo/icons/activity.svg" width="16" height="16" alt=""></span>Generation Interrupted</div>
+      <nav class="lab-nav" aria-label="Experiments">
+        <a href="/demo/"><img src="/demo/icons/audio-lines.svg" alt="" width="15" height="15">Streams</a>
+        <a href="/demo/recovery/" aria-current="true"><img src="/demo/icons/chart-no-axes-combined.svg" alt="" width="15" height="15">Recovery</a>
+        <a href="/demo/admission/"><img src="/demo/icons/list-filter.svg" alt="" width="15" height="15">Admission</a>
+        <a href="/demo/shared-backend/"><img src="/demo/icons/network.svg" alt="" width="15" height="15">Shared backend</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="setup" aria-labelledby="title">
+      <h1 id="title">Load and workers</h1>
+      <p id="run-detail" class="run-detail" role="status">Loading experiment results.</p>
+      <nav class="lab-nav experiment-nav" aria-label="Retry experiments">
+        <a href="/demo/recovery/">Outage recovery</a>
+        <a href="/demo/recovery/single-fault/">Single faults</a>
+        <a href="/demo/recovery/load/" aria-current="page">Load and workers</a>
+      </nav>
+    </section>
+    <section id="load-results" class="recovery-section" hidden aria-labelledby="comparison-title">
+      <h2 id="comparison-title">Worker and policy comparison</h2>
+      <div class="toolbar">
+        <label id="study-label" class="policy-picker" hidden><span>Study</span><select id="load-study"></select></label>
+        <fieldset id="load-match">
+          <legend>Match by</legend>
+          <div class="choices">
+            <label><input name="match" type="radio" value="utilization" checked><span>Nominal utilization</span></label>
+            <label><input id="match-rate" name="match" type="radio" value="rate"><span>Offered rate</span></label>
+          </div>
+        </fieldset>
+        <label class="policy-picker"><span>Metric</span><select id="load-metric">
+          <option value="on_time">On-time completion</option><option value="amplification">Server attempts / request</option>
+          <option value="recovery_s">Recovery confirmation</option><option value="p99_s">p99 time to outcome</option>
+        </select></label>
+        <label class="policy-picker"><span>Seed</span><select id="load-seed"></select></label>
+      </div>
+      <div class="results-scroll" tabindex="0" aria-label="Load sweep results">
+        <table id="load-table" class="results-table load-table" aria-labelledby="comparison-title">
+          <thead><tr><th scope="col" id="group-key">Workers</th><th scope="col" id="group-detail">Offered</th><th scope="col">Backoff only</th><th scope="col" title="Four active HTTP attempts">Client cap (4)</th><th scope="col">Cap change</th></tr></thead>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

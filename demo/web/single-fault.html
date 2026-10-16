@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Generation Interrupted | Single faults</title>
+  <link rel="icon" href="/demo/icons/activity.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demo/style.css">
+  <script type="module" src="/demo/single-fault.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <div class="brand"><span class="brand-mark"><img src="/demo/icons/activity.svg" width="16" height="16" alt=""></span>Generation Interrupted</div>
+      <nav class="lab-nav" aria-label="Experiments">
+        <a href="/demo/"><img src="/demo/icons/audio-lines.svg" alt="" width="15" height="15">Streams</a>
+        <a href="/demo/recovery/" aria-current="true"><img src="/demo/icons/chart-no-axes-combined.svg" alt="" width="15" height="15">Recovery</a>
+        <a href="/demo/admission/"><img src="/demo/icons/list-filter.svg" alt="" width="15" height="15">Admission</a>
+        <a href="/demo/shared-backend/"><img src="/demo/icons/network.svg" alt="" width="15" height="15">Shared backend</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="setup" aria-labelledby="title">
+      <h1 id="title">Single faults</h1>
+      <p id="run-detail" class="run-detail" role="status">Loading experiment results.</p>
+      <nav class="lab-nav experiment-nav" aria-label="Retry experiments">
+        <a href="/demo/recovery/">Outage recovery</a>
+        <a href="/demo/recovery/single-fault/" aria-current="page">Single faults</a>
+        <a href="/demo/recovery/load/">Load and workers</a>
+      </nav>
+    </section>
+    <div id="fault-results" hidden>
+      <section class="recovery-section" aria-labelledby="summary-title">
+        <div class="recovery-header">
+          <h2 id="summary-title">Backoff minus immediate retry</h2>
+          <label class="policy-picker"><span>Metric</span><select id="fault-metric">
+            <option value="success">Usable responses</option><option value="attempts">Attempts / request</option><option value="p99_s">p99 time to outcome</option>
+          </select></label>
+        </div>
+        <div class="results-scroll">
+          <table class="results-table observation-table" aria-labelledby="summary-title">
+            <thead><tr><th scope="col">Fault</th><th scope="col">Median change</th><th scope="col">Seed range</th></tr></thead>
+            <tbody id="fault-summary"></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="recovery-section" aria-labelledby="seeds-title">
+        <div class="recovery-header">
+          <h2 id="seeds-title">Paired runs</h2>
+          <label class="policy-picker"><span>Fault</span><select id="fault-picker"></select></label>
+        </div>
+        <div class="results-scroll">
+          <table class="results-table observation-table" aria-labelledby="seeds-title">
+            <thead><tr><th scope="col">Seed</th><th scope="col">Immediate</th><th scope="col">Backoff</th><th scope="col">Change</th></tr></thead>
+            <tbody id="fault-pairs"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

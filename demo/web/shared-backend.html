@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Generation Interrupted | Shared backend</title>
+  <link rel="icon" href="/demo/icons/activity.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demo/style.css">
+  <script type="module" src="/demo/shared-backend.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <div class="brand"><span class="brand-mark"><img src="/demo/icons/activity.svg" width="16" height="16" alt=""></span>Generation Interrupted</div>
+      <nav class="lab-nav" aria-label="Experiments">
+        <a href="/demo/"><img src="/demo/icons/audio-lines.svg" alt="" width="15" height="15">Streams</a>
+        <a href="/demo/recovery/"><img src="/demo/icons/chart-no-axes-combined.svg" alt="" width="15" height="15">Recovery</a>
+        <a href="/demo/admission/"><img src="/demo/icons/list-filter.svg" alt="" width="15" height="15">Admission</a>
+        <a href="/demo/shared-backend/" aria-current="page"><img src="/demo/icons/network.svg" alt="" width="15" height="15">Shared backend</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="setup" aria-labelledby="title">
+      <h1 id="title">Shared backend</h1>
+      <div class="toolbar">
+        <fieldset id="comparison">
+          <legend>Compare</legend>
+          <div class="choices">
+            <label><input type="radio" name="comparison" value="dispatch" checked><span>Dispatch timing</span></label>
+            <label><input type="radio" name="comparison" value="cancellation"><span>Cancellation</span></label>
+            <label><input type="radio" name="comparison" value="saturation"><span>Saturation</span></label>
+          </div>
+        </fieldset>
+        <fieldset id="sources">
+          <legend>Backend</legend>
+          <div class="choices">
+            <label><input type="radio" name="source" value="scripted" checked><span>Scripted</span></label>
+            <label><input type="radio" name="source" value="ollama"><span>Local Ollama</span></label>
+          </div>
+        </fieldset>
+        <label id="trial-order" class="trial-order" hidden><input type="checkbox"><span>Run cancel trial first</span></label>
+        <button id="run" type="button"><img src="/demo/icons/play.svg" width="17" height="17" alt=""><span>Run comparison</span></button>
+      </div>
+      <p id="shared-state" class="run-detail" role="status">Ready</p>
+    </section>
+    <section class="recovery-section shared-grid" id="trials" aria-label="Shared backend comparison"></section>
+    <template id="trial-template">
+      <section class="shared-trial">
+        <h2></h2>
+        <p class="overlap run-detail" role="status">Not run</p>
+        <article class="policy" data-lane="long">
+          <header class="policy-header"><div class="policy-title"><span class="policy-icon" aria-hidden="true"></span><h3>User A <span>Long request</span></h3></div><p class="status">Ready</p></header>
+          <div class="policy-body"><p class="shared-prompt"></p><p class="transcript" tabindex="0" aria-label="User A output"></p></div>
+          <dl class="metrics">
+            <div><dt>Longest chunk gap</dt><dd data-metric="gap">-</dd></div>
+            <div><dt>Completion</dt><dd data-metric="completion">-</dd></div>
+          </dl>
+        </article>
+        <article class="policy" data-lane="peer">
+          <header class="policy-header"><div class="policy-title"><span class="policy-icon" aria-hidden="true"></span><h3>User B <span>Long request</span></h3></div><p class="status">Ready</p></header>
+          <div class="policy-body"><p class="shared-prompt"></p><p class="transcript" tabindex="0" aria-label="User B output"></p></div>
+          <dl class="metrics">
+            <div><dt>Longest chunk gap</dt><dd data-metric="gap">-</dd></div>
+            <div><dt>Completion</dt><dd data-metric="completion">-</dd></div>
+          </dl>
+        </article>
+        <article class="policy" data-lane="short">
+          <header class="policy-header"><div class="policy-title"><span class="policy-icon" aria-hidden="true"></span><h3><span class="user-name">User B</span> <span>Short request</span></h3></div><p class="status">Ready</p></header>
+          <div class="policy-body"><p class="shared-prompt"></p><p class="transcript" tabindex="0" aria-label="User B output"></p></div>
+          <dl class="metrics">
+            <div><dt>First text</dt><dd data-metric="first">-</dd></div>
+            <div><dt>Completion</dt><dd data-metric="completion">-</dd></div>
+          </dl>
+        </article>
+      </section>
+    </template>
+  </main>
+</body>
+</html>

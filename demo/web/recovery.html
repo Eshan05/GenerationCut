@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Generation Interrupted | Recovery comparison</title>
+  <link rel="icon" href="/demo/icons/activity.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demo/style.css">
+  <script type="module" src="/demo/recovery.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <div class="brand"><span class="brand-mark"><img src="/demo/icons/activity.svg" width="16" height="16" alt=""></span>Generation Interrupted</div>
+      <nav class="lab-nav" aria-label="Experiments">
+        <a href="/demo/"><img src="/demo/icons/audio-lines.svg" alt="" width="15" height="15">Streams</a>
+        <a href="/demo/recovery/" aria-current="page"><img src="/demo/icons/chart-no-axes-combined.svg" alt="" width="15" height="15">Recovery</a>
+        <a href="/demo/admission/"><img src="/demo/icons/list-filter.svg" alt="" width="15" height="15">Admission</a>
+        <a href="/demo/shared-backend/"><img src="/demo/icons/network.svg" alt="" width="15" height="15">Shared backend</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="setup" aria-labelledby="title">
+      <h1 id="title">Recovery comparison</h1>
+      <p id="run-detail" class="run-detail" role="status">Loading experiment results.</p>
+      <nav class="lab-nav experiment-nav" aria-label="Retry experiments">
+        <a href="/demo/recovery/" aria-current="page">Outage recovery</a>
+        <a href="/demo/recovery/single-fault/">Single faults</a>
+        <a href="/demo/recovery/load/">Load and workers</a>
+      </nav>
+    </section>
+    <div id="recovery-results" hidden>
+      <section class="recovery-section" aria-labelledby="chart-title">
+        <div class="recovery-header">
+          <div>
+            <h2 id="chart-title">On-time completions by arrival second</h2>
+            <div class="trace-legend"><span id="reference-trace" class="baseline-trace"></span><span id="selected-trace" class="selected-trace"></span><span class="outage-trace">Outage</span><span id="cutoff-trace" class="cutoff-trace" hidden>Observation cutoff</span></div>
+          </div>
+          <div class="recovery-pickers">
+            <label id="workload-field" class="policy-picker" hidden><span>Workload</span><select id="compare-workload"></select></label>
+            <label class="policy-picker"><span>Compare with</span><select id="compare-case"></select></label>
+            <label id="seed-field" class="policy-picker"><span>Seed</span><select id="compare-seed"></select></label>
+          </div>
+        </div>
+        <p id="paired-result" class="run-detail" hidden></p>
+        <p id="secondary-paired-result" class="run-detail" hidden></p>
+        <p id="cancel-result" class="run-detail" hidden></p>
+        <p id="client-result" class="run-detail" hidden></p>
+        <p id="sdk-result" class="run-detail" hidden></p>
+        <svg id="success-chart" class="success-chart" role="img" aria-labelledby="chart-title" aria-describedby="chart-desc"><desc id="chart-desc"></desc></svg>
+      </section>
+      <section id="observation-results" class="recovery-section" aria-labelledby="observation-title" hidden>
+        <h2 id="observation-title">Ever confirmed by cutoff</h2>
+        <p class="run-detail">First qualifying streak only. The chart shows the full run.</p>
+        <div class="results-scroll">
+          <table class="results-table observation-table" aria-labelledby="observation-title">
+            <thead><tr><th scope="col">Time after outage</th><th id="observation-reference" scope="col"></th><th id="observation-selected" scope="col"></th></tr></thead>
+            <tbody id="observation-rows"></tbody>
+          </table>
+        </div>
+      </section>
+      <section id="stability-results" class="recovery-section" aria-labelledby="stability-title" hidden>
+        <h2 id="stability-title">Recovery milestones</h2>
+        <p class="run-detail">Times after outage end. Sustained recovery requires two consecutive windows with 90% on-time completion in each.</p>
+        <div class="results-scroll">
+          <table class="results-table observation-table" aria-labelledby="stability-title">
+            <thead><tr><th scope="col">Milestone</th><th id="stability-reference" scope="col"></th><th id="stability-selected" scope="col"></th></tr></thead>
+            <tbody id="stability-rows"></tbody>
+          </table>
+        </div>
+      </section>
+      <section class="recovery-section" aria-labelledby="results-title">
+        <h2 id="results-title">Requests and recovery</h2>
+        <div class="results-scroll" tabindex="0" aria-label="Recovery results table">
+          <table class="results-table">
+            <thead><tr><th scope="col">Policy / safeguard</th><th scope="col">On time</th><th scope="col">Attempts / request</th><th scope="col">p99</th><th scope="col">Recovery confirmed after outage</th><th scope="col">Peak queued</th><th scope="col">Shed</th><th scope="col">Cancelled</th><th scope="col">Breaker blocked</th><th scope="col">Budget denied</th></tr></thead>
+            <tbody id="recovery-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

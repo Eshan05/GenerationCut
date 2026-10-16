@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Generation Interrupted | Stream failure lab</title>
+  <link rel="icon" href="/demo/icons/activity.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demo/style.css">
+  <script type="module" src="/demo/app.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <div class="brand"><span class="brand-mark"><img src="/demo/icons/activity.svg" width="16" height="16" alt=""></span>Generation Interrupted</div>
+      <nav class="lab-nav" aria-label="Experiments">
+        <a href="/demo/" aria-current="page"><img src="/demo/icons/audio-lines.svg" alt="" width="15" height="15">Streams</a>
+        <a href="/demo/recovery/"><img src="/demo/icons/chart-no-axes-combined.svg" alt="" width="15" height="15">Recovery</a>
+        <a href="/demo/admission/"><img src="/demo/icons/list-filter.svg" alt="" width="15" height="15">Admission</a>
+        <a href="/demo/shared-backend/"><img src="/demo/icons/network.svg" alt="" width="15" height="15">Shared backend</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="setup" aria-labelledby="title">
+      <div class="lab-heading">
+        <h1 id="title">Stream failure lab</h1>
+        <a class="experiment-link" href="/demo/reconnect/">Reconnect experiment</a>
+        <a class="experiment-link" href="/demo/stall/">Stall experiment</a>
+      </div>
+      <form id="run-form" class="toolbar">
+        <fieldset>
+          <legend>Backend</legend>
+          <div class="choices">
+            <label><input type="radio" name="source" value="scripted" checked><span>Scripted</span></label>
+            <label><input type="radio" name="source" value="ollama"><span>Local Ollama</span></label>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>Disconnect point</legend>
+          <div class="choices">
+            <label><input type="radio" name="scenario" value="before"><span>Before text</span></label>
+            <label><input type="radio" name="scenario" value="after" checked><span>After text</span></label>
+            <label><input type="radio" name="scenario" value="late"><span>Late cut</span></label>
+            <label><input type="radio" name="scenario" value="healthy"><span>No disconnect</span></label>
+          </div>
+        </fieldset>
+        <label id="script-deadline-field" class="policy-picker deadline-picker">
+          <span>Deadline (s)</span>
+          <input id="script-deadline" type="number" min="3" max="30" step="1" value="9" required>
+        </label>
+        <label id="live-policy-field" class="policy-picker" hidden>
+          <span>Live policy</span>
+          <select id="live-policy" name="policy">
+            <option value="never">No retry</option>
+            <option value="always">Always retry</option>
+            <option value="pre-visible" selected>Retry before visible text</option>
+            <option value="adaptive">Budgeted restart</option>
+          </select>
+        </label>
+        <label id="work-budget-field" class="policy-picker deadline-picker">
+          <span id="work-budget-label">Restart budget (units)</span>
+          <input id="work-budget" type="number" min="1" max="1000" step="1" value="75" required>
+        </label>
+        <button id="run" type="submit"><img src="/demo/icons/play.svg" width="16" height="16" alt=""><span>Run comparison</span></button>
+      </form>
+    </section>
+    <section class="workspace" aria-labelledby="prompt-label">
+      <div class="prompt-bar">
+        <div class="prompt-copy">
+          <span id="prompt-label" class="eyebrow">Prompt</span>
+          <p>How does a cache reduce load on a busy API?</p>
+        </div>
+        <div class="run-meta">
+          <div class="run-caption"><span id="run-state" role="status">Not run</span><span class="elapsed"><span id="clock">0.0 s</span> / <span id="deadline">9 s</span></span></div>
+          <progress id="progress" value="0" max="9000" aria-label="Elapsed time against deadline"></progress>
+        </div>
+      </div>
+      <div id="policies" class="policy-grid" aria-label="Policy comparison"></div>
+      <footer class="workspace-footer"><span id="source-label">Scripted generation</span> <span class="divider" aria-hidden="true">/</span> Live HTTP streams</footer>
+    </section>
+  </main>
+  <template id="policy-template">
+    <article class="policy">
+      <header class="policy-header">
+        <div class="policy-title"><span class="policy-icon" aria-hidden="true"></span><h2 data-part="title"></h2></div>
+        <span data-part="status" class="status" role="status"></span>
+      </header>
+      <div class="policy-body">
+        <div class="answer-meta"><span class="eyebrow">Visible answer</span><span data-part="first-text"></span></div>
+        <div class="transcript" data-part="transcript"></div>
+        <p class="note" data-part="note"></p>
+        <p class="work-detail" data-part="work" hidden></p>
+      </div>
+      <dl class="metrics">
+        <div><dt>Attempts</dt><dd data-part="attempts"></dd></div>
+        <div><dt data-part="generated-label">Generated chunks</dt><dd data-part="generated"></dd></div>
+        <div><dt>Unshown chunks</dt><dd data-part="unshown"></dd></div>
+        <div><dt>Time to outcome</dt><dd data-part="outcome-time"></dd></div>
+      </dl>
+    </article>
+  </template>
+</body>
+</html>

@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.env.*
+*.gguf
+results/raw/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+demo/dist/
+demo/node_modules/

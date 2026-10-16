@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101010">
+  <title>Generation Interrupted | Stall experiment</title>
+  <link rel="icon" href="/demo/icons/activity.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/demo/style.css">
+  <script type="module" src="/demo/stall.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="shell masthead-inner">
+      <div class="brand"><span class="brand-mark"><img src="/demo/icons/activity.svg" width="16" height="16" alt=""></span>Generation Interrupted</div>
+      <nav class="lab-nav" aria-label="Experiments">
+        <a href="/demo/"><img src="/demo/icons/audio-lines.svg" alt="" width="15" height="15">Streams</a>
+        <a href="/demo/recovery/"><img src="/demo/icons/chart-no-axes-combined.svg" alt="" width="15" height="15">Recovery</a>
+        <a href="/demo/admission/"><img src="/demo/icons/list-filter.svg" alt="" width="15" height="15">Admission</a>
+        <a href="/demo/shared-backend/"><img src="/demo/icons/network.svg" alt="" width="15" height="15">Shared backend</a>
+      </nav>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="setup" aria-labelledby="title">
+      <h1 id="title">Stall experiment</h1>
+      <form id="stall-form" class="toolbar">
+        <fieldset>
+          <legend>Pause after visible text</legend>
+          <div class="choices">
+            <label><input type="radio" name="scenario" value="temporary" checked><span>Resumes</span></label>
+            <label><input type="radio" name="scenario" value="persistent"><span>Outlasts deadline</span></label>
+          </div>
+        </fieldset>
+        <label class="policy-picker deadline-picker">
+          <span>Deadline (s)</span>
+          <input id="stall-deadline" type="number" min="3" max="15" step="1" value="7" required>
+        </label>
+        <button id="run" type="submit"><img src="/demo/icons/play.svg" width="16" height="16" alt=""><span>Run comparison</span></button>
+      </form>
+    </section>
+    <section class="workspace" aria-labelledby="prompt-label">
+      <div class="prompt-bar">
+        <div class="prompt-copy"><span id="prompt-label" class="eyebrow">Prompt</span><p>How does a cache reduce load on a busy API?</p></div>
+        <div class="stall-meta"><span class="eyebrow">Idle threshold: <span id="idle-threshold"></span></span><p id="run-state" class="run-detail" role="status">Not run</p></div>
+      </div>
+      <div id="stall-policies" class="policy-grid stall-grid" aria-label="Stall policy comparison"></div>
+      <footer class="workspace-footer">Scripted generation <span class="divider" aria-hidden="true">/</span> Live HTTP streams</footer>
+    </section>
+    <template id="stall-template">
+      <article class="policy">
+        <header class="policy-header">
+          <div class="policy-title"><span class="policy-icon" aria-hidden="true"></span><h2></h2></div>
+          <span class="status" role="status"></span>
+        </header>
+        <div class="policy-body">
+          <div class="answer-meta"><span class="eyebrow">Visible answer</span></div>
+          <div class="transcript"></div>
+          <p class="note"></p>
+        </div>
+        <dl class="metrics">
+          <div><dt>Stream requests</dt><dd data-metric="requests"></dd></div>
+          <div><dt>Time to outcome</dt><dd data-metric="outcome"></dd></div>
+          <div><dt>Repeated opening</dt><dd data-metric="repeat"></dd></div>
+        </dl>
+      </article>
+    </template>
+  </main>
+</body>
+</html>
